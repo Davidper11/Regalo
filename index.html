@@ -3,79 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Sorpresa para ti!</title>
+    <title>¡Feliz Navidad! 🎄</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body { 
             text-align: center; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #f9f0ff 0%, #e2d1f9 100%); 
+            /* Fondo rojo navideño con degradado */
+            background: linear-gradient(135deg, #d42426 0%, #720909 100%); 
             margin: 0; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh;
+            overflow: hidden;
         }
         .card { 
-            background: white; 
+            background: rgba(255, 255, 255, 0.95); 
             padding: 40px; 
             border-radius: 30px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
             max-width: 320px;
+            border: 5px solid #f1c40f; /* Borde dorado */
             transform: scale(0);
             animation: aparecer 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
         @keyframes aparecer {
             to { transform: scale(1); }
         }
-        h1 { color: #8e44ad; font-size: 24px; margin-bottom: 10px; }
+        h1 { color: #d42426; font-size: 22px; margin-bottom: 5px; }
+        .subtitulo { color: #2c3e50; font-weight: bold; margin-top: 0; }
         .monto { 
-            font-size: 60px; 
+            font-size: 65px; 
             font-weight: bold; 
-            color: #d4a5ff; 
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            color: #b30606; 
+            margin: 15px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
-        .detalle { font-size: 18px; color: #555; line-height: 1.6; }
-        .emoji { font-size: 40px; }
+        .detalle { font-size: 16px; color: #444; line-height: 1.4; }
+        .decoracion { font-size: 50px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <div class="emoji">✨</div>
-        <h1>¡VALE REGALO!</h1>
-        <div class="monto" id="dinero">80€</div>
-        <p class="detalle">Para consentirte en la peluquería como te mereces.</p>
-        <p style="color: #999; font-size: 12px;"> ❤️❤️❤️❤️❤️❤️❤️❤️❤️</p>
+        <div class="decoracion">🎁</div>
+        <h1>¡FELIZ NAVIDAD!</h1>
+        <p class="subtitulo">Tu regalo especial</p>
+        <div class="monto">80€</div>
+        <p class="detalle">Porque cualquier detalle se te queda corto... TE AMO!!.</p>
+        <p style="color: #d42426; font-size: 20px;">🎄✨🎅</p>
     </div>
 
     <script>
-        // Esta función lanza el confeti automáticamente al abrir la web
         window.onload = function() {
-            var duration = 3 * 1000;
-            var end = Date.now() + duration;
+            // Efecto de nieve cayendo
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var skew = 1;
+
+            function randomInRange(min, max) {
+              return Math.random() * (max - min) + min;
+            }
 
             (function frame() {
+              var timeLeft = animationEnd - Date.now();
+              var ticks = Math.max(200, 500 * (timeLeft / duration));
+              skew = Math.max(0.8, skew - 0.001);
+
               confetti({
-                particleCount: 3,
-                angle: 60,
-                spread: 55,
-                origin: { x: 0 },
-                colors: ['#d4a5ff', '#8e44ad', '#ffffff']
-              });
-              confetti({
-                particleCount: 3,
-                angle: 120,
-                spread: 55,
-                origin: { x: 1 },
-                colors: ['#d4a5ff', '#8e44ad', '#ffffff']
+                particleCount: 1,
+                startVelocity: 0,
+                ticks: ticks,
+                origin: {
+                  x: Math.random(),
+                  y: (Math.random() * skew) - 0.2
+                },
+                colors: ['#ffffff'], // Nieve blanca
+                shapes: ['circle'],
+                gravity: randomInRange(0.4, 0.6),
+                scalar: randomInRange(0.4, 1),
+                drift: randomInRange(-0.4, 0.4)
               });
 
-              if (Date.now() < end) {
+              if (timeLeft > 0) {
                 requestAnimationFrame(frame);
               }
             }());
+            
+            // Lanzamiento inicial de confeti dorado y rojo
+            confetti({
+              particleCount: 150,
+              spread: 70,
+              origin: { y: 0.6 },
+              colors: ['#f1c40f', '#d42426', '#ffffff']
+            });
         };
     </script>
 </body>
