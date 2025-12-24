@@ -3,23 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Sorpresa!</title>
+    <title>¡Sorpresa para ti!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #f9f0ff; color: #4a4a4a; padding: 50px; }
-        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: inline-block; }
-        h1 { color: #d4a5ff; }
-        .boton { background: #d4a5ff; color: white; padding: 15px 25px; text-decoration: none; border-radius: 25px; font-weight: bold; }
+        body { 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #f9f0ff 0%, #e2d1f9 100%); 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh;
+        }
+        .card { 
+            background: white; 
+            padding: 40px; 
+            border-radius: 30px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); 
+            max-width: 320px;
+            transform: scale(0);
+            animation: aparecer 0.8s forwards cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+        @keyframes aparecer {
+            to { transform: scale(1); }
+        }
+        h1 { color: #8e44ad; font-size: 24px; margin-bottom: 10px; }
+        .monto { 
+            font-size: 60px; 
+            font-weight: bold; 
+            color: #d4a5ff; 
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+        .detalle { font-size: 18px; color: #555; line-height: 1.6; }
+        .emoji { font-size: 40px; }
     </style>
 </head>
 <body>
+
     <div class="card">
-        <h1>¡Hola Amor! ❤️</h1>
-        <p>Has desbloqueado un nuevo regalo para ti.</p>
-        <img src="tu-foto-o-logo-peluqueria.jpg" alt="Peluquería" style="width:200px; border-radius: 10px;">
-        <h2>VALE POR: Una sesión de peluquería</h2>
-        <p>Lo que tú quieras para brillar.</p>
-        <br>
-        <p>¡Te mereces muchas mas cosas!</p>
+        <div class="emoji">✨</div>
+        <h1>¡VALE REGALO!</h1>
+        <div class="monto" id="dinero">80€</div>
+        <p class="detalle">Para consentirte en la peluquería como te mereces.</p>
+        <p style="color: #999; font-size: 12px;"> ❤️❤️❤️❤️❤️❤️❤️❤️❤️</p>
     </div>
+
+    <script>
+        // Esta función lanza el confeti automáticamente al abrir la web
+        window.onload = function() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+              confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 },
+                colors: ['#d4a5ff', '#8e44ad', '#ffffff']
+              });
+              confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 },
+                colors: ['#d4a5ff', '#8e44ad', '#ffffff']
+              });
+
+              if (Date.now() < end) {
+                requestAnimationFrame(frame);
+              }
+            }());
+        };
+    </script>
 </body>
 </html>
